@@ -1,56 +1,56 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Peer } from "peerjs";
+import { DataConnection, Peer } from 'peerjs';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
+  private peer: any;
+  public peerId: string = '';
+  private connection: any;
 
-  private peer: any
-  private connection: any
+  public message: string = '';
+  public messages: any[] = [];
 
-  public message: string = ''
-
-  constructor(
-    private route: ActivatedRoute
-  ) {
-    const peerId = this.route.snapshot.paramMap.get('peerId')
-    console.log('Peer: ', peerId);
-    if(peerId) this.createPeer(peerId)
-   }
+  constructor(private route: ActivatedRoute) {
+    const peerId = this.route.snapshot.paramMap.get('peerId');
+    if(peerId) this.peerId = peerId
+  }
 
   ngOnInit(): void {
-    this.incomingMessageListener()
+    this.initializePeer();
+    this.incomingMessageListener();
   }
 
-  createPeer(peerId: string) {
-    this.peer = new Peer(peerId);
+  initializePeer() {
+    this.peer = new Peer(this.peerId);
   }
 
-  connectWithOtherPeer(otherPeerId: string) {    
+  connectWithOtherPeer(otherPeerId: string) {
     this.connection = this.peer.connect(otherPeerId);
   }
 
   incomingMessageListener() {
-    this.peer.on("connection", (conn: any) => {      
-      conn.on("data", (data: any) => {
-        console.log('Message received: ', data);
+    this.peer.on('connection', (conn: DataConnection) => {     
+      conn.on('data', (data: any) => {
+        this.messages.push({from: conn.peer, message: data})
       });
     });
   }
 
   sendMessage() {
-    if(!this.message) {
-      alert('No message provided')
-      return
+    if (!this.message) {
+      alert('No message provided');
+      return;
     }
 
-    this.connection.on("open", () => {
-      this.connection.send(this.message);
-    });
+    this.connection.send(this.message);
+    this.messages.push({from: this.peerId, message: this.message})
+    this.message = '';
   }
-  
+
+
 }
