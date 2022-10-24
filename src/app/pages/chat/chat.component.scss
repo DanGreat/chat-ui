@@ -1,0 +1,21 @@
+:host {
+    background-color: rgb(241, 241, 241);
+    display: block;
+    height: 100vh;
+}
+
+.chat-area {
+    position: relative;
+    .message-input {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+
+        textarea {
+            height: 70px;
+            resize: none;
+        }
+    }
+}

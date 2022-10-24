@@ -1,0 +1,11 @@
+.name-container {
+    display: grid;
+    place-content: center;
+    height: 100vh;
+
+    form {
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 2px 3px 29px -3px lightgrey;
+    }
+}
