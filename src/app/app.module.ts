@@ -6,14 +6,19 @@ import { AppComponent } from './app.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; 
 import { FormsModule } from '@angular/forms';
+
 import { LoginComponent } from './pages/login/login.component';
 import { ChatComponent } from './pages/chat/chat.component';
+import { ChatListComponent } from './views/chat-list/chat-list.component';
+import { ChatWindowComponent } from './views/chat-window/chat-window.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ChatComponent
+    ChatComponent,
+    ChatListComponent,
+    ChatWindowComponent
   ],
   imports: [
     BrowserModule,
