@@ -1,8 +1,7 @@
-<div class="container">
-  <h1 class="pt-3">Chat UI <i class="bi bi-chat-dots"></i></h1>
+<div class="container pt-3">
+  <h1>Chat-UI <i class="bi bi-chat-dots"></i></h1>
 
-  <!-- <div class="row mt-4 mx-auto"> -->
-    <div class="chat-area">
+    <div class="chat-area  mt-4">
       <app-chat-window [messages]="messages" [me]="from"></app-chat-window>
 
       <div class="message-input">
@@ -13,10 +12,9 @@
           placeholder="Enter message..."
           [(ngModel)]="message"
         ></textarea>
-        <button class="btn btn-success mx-3" (click)="sendMessage()">
+        <button class="btn btn-success mx-2" (click)="sendMessage()">
           Send
         </button>
       </div>
-    <!-- </div> -->
   </div>
 </div>
