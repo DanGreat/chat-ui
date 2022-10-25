@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 
 import { LoginComponent } from './pages/login/login.component';
 import { ChatComponent } from './pages/chat/chat.component';
-import { ChatListComponent } from './views/chat-list/chat-list.component';
 import { ChatWindowComponent } from './views/chat-window/chat-window.component';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { ChatWindowComponent } from './views/chat-window/chat-window.component';
     AppComponent,
     LoginComponent,
     ChatComponent,
-    ChatListComponent,
     ChatWindowComponent
   ],
   imports: [

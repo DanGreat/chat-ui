@@ -8,36 +8,25 @@ import { DataConnection, Peer } from 'peerjs';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
-  private peer: any;
-  public peerId: string = '';
-  private connection: any;
-
+  public from: string = '';
   public message: string = '';
-  public messages: any[] = [];
+  public messages: { message: string; from: string }[] = [];
+
+  private channel: BroadcastChannel = new BroadcastChannel('chat-room');
 
   constructor(private route: ActivatedRoute) {
-    const peerId = this.route.snapshot.paramMap.get('peerId');
-    if(peerId) this.peerId = peerId
+    const from = this.route.snapshot.paramMap.get('from');
+    if (from) this.from = from;
   }
 
   ngOnInit(): void {
-    this.initializePeer();
     this.incomingMessageListener();
   }
 
-  initializePeer() {
-    this.peer = new Peer(this.peerId);
-  }
-
-  connectWithOtherPeer(otherPeerId: string) {
-    this.connection = this.peer.connect(otherPeerId);
-  }
-
   incomingMessageListener() {
-    this.peer.on('connection', (conn: DataConnection) => {     
-      conn.on('data', (data: any) => {
-        this.messages.push({from: conn.peer, message: data})
-      });
+    this.channel.addEventListener('message', (message) => {
+      this.messages.push(message.data);
+      this.saveMessageToMemory(this.messages);
     });
   }
 
@@ -47,10 +36,15 @@ export class ChatComponent implements OnInit {
       return;
     }
 
-    this.connection.send(this.message);
-    this.messages.push({from: this.peerId, message: this.message})
+    const messsageObj = { message: this.message, from: this.from };
+    this.channel.postMessage(messsageObj);
+
+    this.messages.push(messsageObj);
+    this.saveMessageToMemory(this.messages);
     this.message = '';
   }
 
-
+  saveMessageToMemory(messages: any[]) {
+    localStorage.setItem('messages', JSON.stringify(messages));
+  }
 }

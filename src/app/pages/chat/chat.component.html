@@ -1,19 +1,22 @@
 <div class="container">
+  <h1 class="pt-3">Chat UI <i class="bi bi-chat-dots"></i></h1>
 
-    <h1>Chat UI <i class="bi bi-chat-dots"></i></h1>
+  <!-- <div class="row mt-4 mx-auto"> -->
+    <div class="chat-area">
+      <app-chat-window [messages]="messages" [me]="from"></app-chat-window>
 
-    <div class="row mt-5">
-        <div class="col-lg-4">
-            <app-chat-list (onSelect)="connectWithOtherPeer($event)"></app-chat-list>
-        </div>
-        <div class="col-lg-8 chat-area">
-            <app-chat-window [messages]="messages" [peerId]="peerId"></app-chat-window>
-
-            <div class="message-input">
-                <textarea class="form-control" cols="30" rows="5" placeholder="Enter message..." [(ngModel)]="message"></textarea>
-                <button class="btn btn-success mx-3" (click)="sendMessage()">Send</button>
-            </div>
-        </div>
-    </div>
-
+      <div class="message-input">
+        <textarea
+          class="form-control"
+          cols="30"
+          rows="5"
+          placeholder="Enter message..."
+          [(ngModel)]="message"
+        ></textarea>
+        <button class="btn btn-success mx-3" (click)="sendMessage()">
+          Send
+        </button>
+      </div>
+    <!-- </div> -->
+  </div>
 </div>

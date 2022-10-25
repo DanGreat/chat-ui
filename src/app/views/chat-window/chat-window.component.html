@@ -1,21 +1,29 @@
-<div>
-    <ng-container >
-        <ng-container *ngFor="let message of messages; trackBy: indexFn">
-            <div class="others d-flex justify-content-start" *ngIf="message?.from !== peerId">
-                <div class="avatar"></div>
-                <div class="message shadow-lg p-3 mb-3 bg-body rounded">
-                    <p>{{ message?.message }}</p>
-                </div>
-            </div>
-        
-            <div class="me d-flex justify-content-end" *ngIf="message?.from === peerId">
-                <div class="message shadow-lg p-3 mb-3 bg-body rounded">
-                    <p>{{ message?.message }}</p>
-                </div>
-                <div class="avatar"></div>
-            </div>
-        </ng-container>
-       
-    </ng-container>
-    
+<div #chatWindow>
+  <ng-container *ngFor="let message of messages;">
+
+    <!-- Message from thers -->
+    <div class="item d-flex justify-content-start mb-4" *ngIf="message?.from !== me">
+      
+      <div class="from">
+        <div class="avatar"></div>
+        <span class="from-label">{{ message?.from | titlecase }}</span>
+      </div>
+
+      <div class="message">
+        <div class="shadow-lg p-3 bg-body rounded">
+          <p>{{ message?.message }}</p>
+        </div>
+      </div>
+     
+    </div>
+
+    <!-- Message from me -->
+    <div class="item d-flex justify-content-end mb-4" *ngIf="message?.from === me">
+      <div class="message shadow-lg p-3 bg-body rounded">
+        <p>{{ message?.message }}</p>
+      </div>
+      <div class="avatar"></div>
+    </div>
+
+  </ng-container>
 </div>

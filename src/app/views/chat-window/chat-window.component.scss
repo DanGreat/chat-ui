@@ -1,6 +1,6 @@
 :host {
     display: block;
-    height: calc(100% - 80px);
+    height: 80vh;
     overflow-y: auto;
     &::-webkit-scrollbar {
         width: 5px;
@@ -10,6 +10,17 @@
 
 .message {
     max-width: 50%;
+}
+
+.from {
+    display: grid;
+    place-items: center;
+
+    .from-label {
+        font-weight: 400;
+        font-size: 13px;
+        margin-top: -11px;
+    }
 }
 
 .avatar {
