@@ -1,4 +1,4 @@
-<div class="chat-window" (scroll)="onScroll($event)" #chatWindow>
+<div class="chat-window" (scroll)="onScroll()" #chatWindow>
   <ngb-toast *ngIf="isLoading" [autohide]="false"> {{ loadingMessage }} </ngb-toast>
 
   <ng-container *ngFor="let message of messages.slice(CHAT_SIZE); trackBy: indexFn">
