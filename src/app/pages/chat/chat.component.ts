@@ -10,7 +10,7 @@ import { DataConnection, Peer } from 'peerjs';
 export class ChatComponent implements OnInit {
   public from: string = '';
   public message: string = '';
-  public messages: { message: string; from: string }[] = [];
+  public messages: { message: string; from: string }[] = []
 
   private channel: BroadcastChannel = new BroadcastChannel('chat-room');
 
@@ -20,7 +20,18 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getExistingMessages()
     this.incomingMessageListener();
+  }
+
+  getExistingMessages() {
+    const storageMessages = localStorage.getItem('messages') || '[]'
+    const parsedMessages = JSON.parse(storageMessages)
+    this.messages = parsedMessages
+  }
+
+  loadMoreMessages() {
+
   }
 
   incomingMessageListener() {
@@ -41,6 +52,7 @@ export class ChatComponent implements OnInit {
 
     this.messages.push(messsageObj);
     this.saveMessageToMemory(this.messages);
+
     this.message = '';
   }
 

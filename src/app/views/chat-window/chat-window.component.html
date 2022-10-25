@@ -1,5 +1,7 @@
-<div #chatWindow>
-  <ng-container *ngFor="let message of messages;">
+<div class="chat-window" (scroll)="onScroll($event)" #chatWindow>
+  <ngb-toast *ngIf="isLoading" [autohide]="false"> {{ loadingMessage }} </ngb-toast>
+
+  <ng-container *ngFor="let message of messages.slice(CHAT_SIZE); trackBy: indexFn">
 
     <!-- Message from thers -->
     <div class="item d-flex justify-content-start mb-4" *ngIf="message?.from !== me">

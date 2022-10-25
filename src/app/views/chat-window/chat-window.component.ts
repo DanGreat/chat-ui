@@ -3,8 +3,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
+  HostListener,
   Input,
+  OnChanges,
   OnInit,
+  Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 
@@ -14,19 +19,21 @@ import {
   styleUrls: ['./chat-window.component.scss'],
 })
 export class ChatWindowComponent
-  implements OnInit, AfterViewInit, AfterViewChecked
+  implements OnInit, AfterViewInit
 {
-  @ViewChild('chatWindow') chatWindow!: ElementRef;
+  @ViewChild('chatWindow', { read: ElementRef }) chatWindow!: ElementRef<any>;
   @Input() messages: any[] = [];
   @Input() me: string = '';
+
+  public CHAT_SIZE: number = -25
+  public loadingMessage: string = ''
+  public isLoading: boolean = false
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {}
-
-  ngAfterViewChecked(): void {
+  ngAfterViewInit(): void {  
     this.scrollToBottom();
   }
 
@@ -34,13 +41,27 @@ export class ChatWindowComponent
     return index;
   }
 
-  scrollToBottom(): void {
-    this.chatWindow.nativeElement.scrollTop =
-      this.chatWindow.nativeElement.scrollHeight;
-    // this.chatWindow.nativeElement.scroll({
-    //   top: this.chatWindow.nativeElement.scrollHeight,
-    //   left: 0,
-    //   behavior: 'smooth',
-    // });
+  scrollToBottom(): void {        
+    this.chatWindow.nativeElement.scroll({
+      top: this.chatWindow.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  @HostListener('scroll', ['$event'])
+  onScroll(event: any) {
+    const top = event.target.scrollTop
+
+    if(top === 0 && (this.messages.length > Math.abs(this.CHAT_SIZE))) {
+      this.isLoading = true
+      this.loadingMessage = 'Loading more messages...'
+
+      setTimeout(() => {
+        this.CHAT_SIZE += (this.CHAT_SIZE)
+        this.isLoading = false
+        this.loadingMessage = ''
+      }, 3000)
+    }
   }
 }
