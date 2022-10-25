@@ -14,7 +14,7 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'chat/:peerId',
+    path: 'chat/:from',
     component: ChatComponent
   }
 ];

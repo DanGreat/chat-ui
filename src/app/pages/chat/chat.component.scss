@@ -6,6 +6,9 @@
 
 .chat-area {
     position: relative;
+    max-width: 776px;
+    margin: 0 auto;
+
     .message-input {
         display: flex;
         align-items: center;
